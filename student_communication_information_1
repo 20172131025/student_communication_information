@@ -1,34 +1,115 @@
-#include<iostream>
-#include<string>
-using namespace std;
-//联系电话类型
-struct phone_number{
-     enum phone_type{固定电话，手机};
-     string number;
-};
-//学生信息
-struct student_communication_information{
-     string no;
-     string name;
-     phone_number p_n;
-     string college;
-};
-//单向链表结点
-struct单链表 linkRec_one{
-     student_communication_information data;
-     student_communication_information *next;
-};
-//双向链表结点
-struct linkRec_two{
-     student_communication_information *last;
-     student_communication_information data;
-     student_communication_information *next;
-}
-//待完善主函数，只建了一个单链表
+#include"s_c_i.h"
+//主函数
 int main()
 {
+     linkRec_one* head;
+     Y_or_nT Y_or_n=1;
+     do{
+     switch(s_c_i_outcomeT myprint()){
+          case "创建通讯录":head=student_communication_information* mycreat(head);
+          case "显示通讯录":void mydisplay(head);break;
+          case "查询通讯录":linkRec_one* mysearch(head,sort_gets());break;
+          case "修改通讯录":void mymodify(head,sort_gets());break;
+          case "添加通讯录":void myadd(linkRec_one*head);break;
+          case "删除通讯录":void mydelete(linkRec_one*head,sort_gets());break;
+          case "通讯­录排序":void mysort(linkRec_one*head);break;
+     }
+     cout<<"请选择是否退出，输入Y是，n否"
+     cin>>Y_or_n;
+     }while(Y_or_n)
+}
+#ifndef S_C_I
+     #define S_C_I
+     #include<iostream>
+     #include<string>
+     using namespace std;
+     enum phone_typeT{"固定电话"，"手机"};
+     enum s_c_i_outcomeT{"创建通讯录"=1,"显示通讯录","查询通讯录","修改通讯录","添加通讯录","删除通讯录","通讯­录排序"};
+     enum Y_or_nT{Y,n};
+     //联系电话类型
+     struct phone_number{
+          phone_typeT phone_type;
+          string number;
+     };
+     struct student_communication_information{
+          string no;
+          string name;
+          phone_number p_n;
+          string college;
+     };
+     //单向链表结点
+     struct linkRec_one{
+          student_communication_information data;
+          student_communication_information *next;
+     };
+     //双向链表结点
+     struct linkRec_two{
+          student_communication_information *last;
+          student_communication_information data;
+          student_communication_information *next;
+     };
+    s_c_i_outcomeT myprint()//显示主菜单
+    student_communication_information* mycreat(linkRec_one* head);//创建通讯录
+    void mycreat_student_communication_information(student_communication_information &s_c_i);//构造学生信息
+    void display_student_communication_information(const student_communication_information &s_c_i);//显示学生信息
+    void mydisplay(linkRec_one *head);//显示通讯录
+    string sort_gets();//搜索输入
+    linRec* sch_num(linkRec_one* head,string no);//按学号搜索
+    linkRec_one* sch_name(linkRec_one* head,string name);//按姓名搜索
+    linkRec_one* mysearch(linkRec_one* head,string no_or_name);//搜索
+    student_communication_information gets(linkRec_one* head);//插入链表的输入
+    void myadd(linkRec_one*head);//插入链表
+    void mymodify(linkRec_one*head,string no_or_name);//修改链表
+    void mydelete(linkRec_one*head,string no_or_name);//删除链表
+    void linkRec_one_transform_to_two(linkRec_one*head,linkRec_two *h,linkRec_two *n)//因为需要冒泡排序，所以单向链表转双向链表
+    void linkRec_two_exchange(linkRec*p,linkRec*q);//交换链表中的结点
+    void mysort(linkRec_one*head);//冒泡排序
+#endif
+#include"s_s_i.h"
+//插入链表的输入
+student_communication_information gets(linkRec_one* head)
+{
+     student_communication_information s_c_i;
+     cout<<"请输入学生信息："<<endl;
+     while(true){
+     cout<<"请输入学号：";
+     cin>>s_c_i.no
+     if(mysearch(head,s_c_i.no)==NULL) bleak;
+     }
+     cout<<endl;
+     cout<<"请输入姓名："; cin>>s_c_i.name; cout<<endl;
+     cout<<"请输入联系电话类型 0：固定电话 1：手机"; cin>>s_c_i.phone_number.phone_type;cout<<endl;
+     cout<<"请输入联系电话号码："; cin>>s_c_i.phone_number.number;cout<<endl;
+     cout<<"请输入学院：";cin>>s_c_i.college.;cout<<endl;
+     return s_c_i;
+}
+//插入链表
+void myadd(linkRec_one*head)
+{
+     linkRec_one *rear=head;
+     while(rear->next!=NULL) rear=rear->next;
+     student_communication_information s_c_i=gets(head);
+     linkRec_one *p=new linkRec_one;
+     p->data=s_c_i;
+     p->next=NULL;
+     rear->next=p;
+}
+#include"s_c_i.h"
+//构造学生信息
+void mycreat_student_communication_information(student_communication_information &s_c_i)
+{
+     cout<<"请输入学生信息："<<endl;
+     cout<<"请输入学号："; cin>>s_c_i.no; cout<<endl;
+     cout<<"请输入姓名："; cin>>s_c_i.name; cout<<endl;
+     cout<<"请输入联系电话类型 固定电话请选择1 手机请选择2"; cin>>s_c_i.phone_number.phone_type;cout<<endl;
+     cout<<"请输入联系电话号码："; cin>>s_c_i.phone_number.number;cout<<endl;
+     cout<<"请输入学院：";cin>>s_c_i.college.;cout<<endl;
+}
+//创建通讯录
+student_communication_information* mycreat(linkRec_one* head)
+{
      student_communication_information x;
-     linkRec_one *head,*p,*rear;
+     linkRec_one *p,*rear;
      head=rear=new linkRec_one;
      while(true){
           mycreat(x);
@@ -39,27 +120,47 @@ int main()
           rear=p;
      }
      rear->next=NULL;
-     return 0;
+     return head;
 }
+#include"s_c_i.h"
+//删除链表
+void mydelete(linkRec_one*head,string no_or_name)
+{
+     linkRec_one*p=NULL;
+     linkRec_one*delPtr=NULL;
+     if((p=mysearch(linkRec_one* head,string no_or_name))!=NULL){
+          delPtr=p->next;
+          p->next=delPtr->next;
+          delete delPtr;
+     }
+}
+#include"s_c_i.h"
+//修改链表
+void mymodify(linkRec_one*head,string no_or_name)
+{
+     linkRec_one*p==NULL;
+     student_communication_information s_c_i;
+     if((p=mysearch(linkRec_one* head,string no_or_name))!=NULL){
+          mycreat(s_c_i);
+          p->data=s_c_i;
+     }
+}
+#include"s_c_i.h"
 //显示主菜单
-void myprint()
+s_c_i_outcomeT myprint()
 {
      cout<<"创建通讯录"<<"显示通讯录"<<"查询通讯录"
           <<"修改通讯录"<<"添加通讯录"<<"删除通讯录"
-          <<"通讯­录排序";
+          <<"通讯­录排序"<<endl;
+     cout<<"创建通讯录请选择1，显示通讯录请选择2,查询通讯录请选择3,"
+          <<"修改通讯录请选择4,添加通讯录请选择5,删除通讯录请选择6,"
+          <<"通讯­录排序请选择7"<<endl;
+     s_c_i_outcomeT s_c_i_outcome;
+     cin>>s_c_i_outcome;
+     return s_c_i_outcome;
 }
-//构造学生信息
-void mycreat(student_communication_information &s_c_i)
-{
-     cout<<"请输入学生信息："<<endl;
-     cout<<"请输入学号："; cin>>s_c_i.no; cout<<endl;
-     cout<<"请输入姓名："; cin>>s_c_i.name; cout<<endl;
-     cout<<"请输入联系电话类型 0：固定电话 1：手机"; cin>>s_c_i.phone_number.phone_type;cout<<endl;
-     cout<<"请输入联系电话号码："; cin>>s_c_i.phone_number.number;cout<<endl;
-     cout<<"请输入学院：";cin>>s_c_i.college.;cout<<endl;
-}_
 //显示学生信息
-void mydisplay(student_communication_information &s_c_i)
+void display_student_communication_information(const student_communication_information &s_c_i)
 {
      cout<<"学生信息："<<endl;
      cout<<"学号："<<s_c_i.no<<endl;
@@ -68,6 +169,18 @@ void mydisplay(student_communication_information &s_c_i)
           <<s_c_i.phone_number.number;
      cout<<"学院："<<s_c_i.college<<endl;
 }
+//显示通讯录
+void mydisplay(linkRec_one *head)
+{
+     linkRec *p=head->next;
+     while(p!=NULL){
+          display_student_communication_information(p->data);
+          p=p->next;
+     }
+     cout<<endl;
+     return 0;
+}
+#include"s_c_i.h"
 //按学号搜索
 linRec* sch_num(linkRec_one* head,string no)
 {
@@ -92,6 +205,14 @@ linkRec_one* sch_name(linkRec_one* head,string name)
      }
      return NULL ;
 }
+//搜索输入
+string sort_gets()
+{
+     string no_or_name;
+     cout<<"请输入学号或姓名："<<endl;
+     cin>>no_or_name;
+     return no_or_name;
+}
 //搜索
 linkRec_one* mysearch(linkRec_one* head,string no_or_name)
 {
@@ -99,64 +220,19 @@ linkRec_one* mysearch(linkRec_one* head,string no_or_name)
      linkRec_one*p=NULL;
      cout<<"请选择： 0：按学号查找通讯录信息 1：按姓名查找通讯录信息";
      if(choose==0){
-     if(p=sch_name(head,no_or_name)!=NULL)return p;
+     if(p=sch_name(head,no_or_name)!=NULL) return p;
      else return NULL;
      }else{
      if((p=sch_num(head,no_or_name))!=NULL) return p;
      else return NULL;
      }
 }
-//插入链表的输入
-student_communication_information gets(linkRec_one* head)
-{
-     student_communication_information s_c_i;
-     cout<<"请输入学生信息："<<endl;
-     while(true){
-     cout<<"请输入学号：";
-     cin>>s_c_i.no
-     if(mysearch(head,s_c_i.no)==NULL) bleak;
-     }
-     cout<<endl;
-     cout<<"请输入姓名："; cin>>s_c_i.name; cout<<endl;
-     cout<<"请输入联系电话类型 0：固定电话 1：手机"; cin>>s_c_i.phone_number.phone_type;cout<<endl;
-     cout<<"请输入联系电话号码："; cin>>s_c_i.phone_number.number;cout<<endl;
-     cout<<"请输入学院：";cin>>s_c_i.college.;cout<<endl;
-     return s_c_i;
-}
-//插入链表
-void myadd(linkRec_one*head,linkRec_one *rear)
-{
-     student_communication_information s_c_i;
-     s_c_i=gets(head);
-     linkRec_one *p;
-     p->data=s_c_i;
-     p->next=NULL;
-     rear->next=p;
-}
-//修改链表
-void mymodify(linkRec_one*head,string no_or_name)
-{
-     linkRec_one*p==NULL;
-     student_communication_information s_c_i;
-     if((p=mysearch(linkRec_one* head,string no_or_name))!=NULL){
-          mycreat(s_c_i);
-          p->data=s_c_i;
-     }
-}
-//删除链表
-void mydelete(linkRec_one*head,string no_or_name)
-{
-     linkRec_one*p=NULL;
-     linkRec_one*delPtr=NULL;
-     if((p=mysearch(linkRec_one* head,string no_or_name))!=NULL){
-          delPtr=p->next;
-          p->next=delPtr->next;
-          delete delPtr;
-     }
-}
+#include"s_c_i.h"
 //因为需要冒泡排序，所以单向链表转双向链表
-void linkRec_one_transform_to_two(linkRec_one*head,linkRec_one*rear,linkRec_two *h,linkRec_two *n)
+void linkRec_one_transform_to_two(linkRec_one*head,linkRec_two *h,linkRec_two *n)
 {
+     linkRec_one *rear=head;
+     while(rear->next!=NULL) rear=rear->next;
      linkRec_two *l=new linkRec_two;
      linkRec_two *p=new linkRec_two;
      linkRec_one *q=head->next;
@@ -199,8 +275,10 @@ void linkRec_two_exchange(linkRec*p,linkRec*q)
      q->next=tmp_next;
 }
 //冒泡排序
-void mysort(linkRec_one*head,linkRec_one*rear)
+void mysort(linkRec_one*head)
 {
+     linkRec_one *rear=head;
+     while(rear->next!=NULL) rear=rear->next;
      linkRec_two *h=new linkRec_two;
      linkRec_two *n=new linkRec_two;
      linkRec_two *p=new linkRec_two;
@@ -230,36 +308,3 @@ void mysort(linkRec_one*head,linkRec_one*rear)
            }
       }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
